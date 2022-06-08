@@ -17,12 +17,12 @@ return [
     | https://developers.google.com/console
     |
     */
-    'client_id' => env('GOOGLE_CLIENT_ID', ''),
-    'client_secret' => env('GOOGLE_CLIENT_SECRET', ''),
-    'redirect_uri' => env('GOOGLE_REDIRECT', ''),
-    'scopes' => [],
-    'access_type' => 'online',
-    'approval_prompt' => 'auto',
+    'client_id'         => env('GOOGLE_CLIENT_ID', ''),
+    'client_secret'     => env('GOOGLE_CLIENT_SECRET', ''),
+    'redirect_uri'      => env('GOOGLE_REDIRECT', ''),
+    'scopes'            => [\Google_Service_Sheets::DRIVE, \Google_Service_Sheets::SPREADSHEETS],
+    'access_type'       => 'offline',
+    'approval_prompt'   => 'force',
 
     /*
     |----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
          * Path to service account json file. You can also pass the credentials as an array
          * instead of a file path.
          */
-        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', ''),
+        'file'   => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', storage_path('credentials.json')),
     ],
 
     /*
@@ -70,4 +70,7 @@ return [
     |
     */
     'config' => [],
+
+    'post_spreadsheet_id' => env('POST_SPREADSHEET_ID'),
+    'post_sheet_id'       => env('POST_SHEET_ID'),
 ];
