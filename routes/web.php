@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SheetController;
+use App\Services\GoogleSheet;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (GoogleSheet $googleSheet) {
+    $sheet = '1';
+    $index = '1';
+    $values = [
+        ['Emy', 'IRT', 'Yogyakarta'],
+        ['Pamuda', 'Programmer', 'Kediri'],
+    ];
+
+    $googleSheet->saveData($sheet, $values);
+    $googleSheet->getData($sheet, $index);
     return view('welcome');
 });
+
+Route::get('/sheet', [SheetController::class, 'getData']);
