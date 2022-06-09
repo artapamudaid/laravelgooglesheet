@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $values = [
-        ['Pamuda', 'Programmer', 'Kediri'],
-    ];
-
-    dd($values);
     return view('welcome');
 });
 
