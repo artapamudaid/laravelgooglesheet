@@ -15,17 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (GoogleSheet $googleSheet) {
-    $sheet = '1';
-    $index = '1';
+Route::get('/', function () {
     $values = [
-        ['Emy', 'IRT', 'Yogyakarta'],
         ['Pamuda', 'Programmer', 'Kediri'],
     ];
 
-    $googleSheet->saveData($sheet, $values);
-    $googleSheet->getData($sheet, $index);
+    dd($values);
     return view('welcome');
 });
 
-Route::get('/sheet', [SheetController::class, 'getData']);
+Route::get('/sheet/{sheet}/{cell}', [SheetController::class, 'getData'])->name('getData');
+Route::get('/sheet/{sheet}', [SheetController::class, 'getForm'])->name('getForm');
+Route::post('/sheet/{sheet}', [SheetController::class, 'saveData'])->name('saveData');

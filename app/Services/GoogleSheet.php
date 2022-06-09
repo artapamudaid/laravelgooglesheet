@@ -34,10 +34,10 @@ class GoogleSheet
             ->spreadsheets_values
             ->batchGet($this->spreadSheetId, ['ranges' => $range]);
 
-        dd($data->getValueRanges()[0]->values);
+        return $data->getValueRanges()[0]->values;
     }
 
-    public function saveData($sheet, array $data)
+    public function saveData($sheet, $data)
     {
         $body = new Google_Service_Sheets_ValueRange([
             'values' => $data

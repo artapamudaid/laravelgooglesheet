@@ -2,32 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Request;
-use Sheets;
+use Illuminate\Http\Request;
+use App\Services\GoogleSheet;
+
 
 class SheetController extends Controller
 {
 
-    public function getData()
+    public function getData($sheet, $index)
     {
+        $googleSheet = new GoogleSheet;
+        $datas = $googleSheet->getData($sheet, $index);
 
-        $rows = Sheets::sheet('2020')->get();
-
-        $header = $rows->pull(0);
-        $values = Sheets::collection($header, $rows);
-        $values->toArray();
+        return view('sheet.list', compact(['datas']));
     }
 
-    public function postData()
+    public function getForm($sheet)
     {
-        $append = [
-            'Nama' => 'Arta',
-            'Pekerjaan' => 'Senoir Software Engineer',
-            'Kota' => 'Kediri'
+        return view('sheet.form', compact(['sheet']));
+    }
+
+    public function saveData($sheet, Request $request)
+    {
+        $values = [
+            [
+                $request->nama,
+                $request->pekerjaan,
+                $request->kota,
+            ]
         ];
 
-        $appendSheet = Sheets::spreadsheet(config('google.post_spreadsheet_id'))
-            ->sheet(config('google.post_sheet_id'))
-            ->append([$append]);
+        // dd($values);
+
+        $googleSheet = new GoogleSheet;
+        $googleSheet->saveData($sheet, $values);
     }
 }
